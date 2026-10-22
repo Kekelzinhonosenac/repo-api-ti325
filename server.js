@@ -1,6 +1,6 @@
 require('dotenv').config(); // Carrega as variáveis do arquivo .env para o process.env
 const express = require('express');
-const cpf = require('./cpf.controller');
+const cpfController = require('./cpfController.controller');
 const app = express();
 app.use(express.json());
 
