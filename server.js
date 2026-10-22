@@ -40,7 +40,7 @@ app.post('/usuario', (req, res) => {
 })
 
 //rota post para diretamente a função do controller recebercpf
-app.post('/cpf', cpf.receberCpf);
+app.post('/cpf', cpfController.receberCPF);
 
 
 
