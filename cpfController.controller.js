@@ -1,3 +1,4 @@
+
 function validarCPFsimples(cpfOriginal) {
     if(!cpfOriginal) return { valido: false, mensagem: "CPF não informado" };
 
@@ -18,35 +19,42 @@ function validarCPFsimples(cpfOriginal) {
     }
     
     //verifica se todos os dígitos são iguais (ex: 111.111.111-11)
-    if (todosIguais = /^(\d)\1{10}$/.test(apenasNumeros)) {
+    const todosIguais = /^(\d)\1{10}$/.test(apenasNumeros);
+
+    if (todosIguais) {
         return { valido: false, mensagem: "CPF inválido: todos os dígitos são iguais" };
     }
+
     return {
         valido: true,
         mensagem: 'CPF possui formato e tamanho válidos',
         cpfLimpo: apenasNumeros
-    }
+    };
+}
 
-    const cpfController = {
+const cpfController = {
     //metodo 1
-        receberCPF: (req, res) => {
-            //LIGAÇÃO: a função receberCPF é chamada quando a rota POST /cpf é acessada, e ela recebe os dados do corpo da requisição (req.body) e envia uma resposta (res.json) de volta ao cliente.
-            const { cpf } = req.body;
-            return res.json({
-            sucesso: true,
-            mensagem: 'CPF recebido com sucesso',
-            cpfOriginal: cpf,
-            mensagem: resultado.motivo
-        })
+    receberCPF: (req, res) => {
+        //LIGAÇÃO: a função receberCPF é chamada quando a rota POST /cpf é acessada, e ela recebe os dados do corpo da requisição (req.body) e envia uma resposta (res.json) de volta ao cliente.
+        const { cpf } = req.body;
+
+        const resultadoValidacao = validarCPFsimples(cpf);
+        
         if (!resultadoValidacao.valido) {
             return res.status(400).json({
                 status: 'erro',
                 valido: false,
                 cpfEnviado: cpf,
-                mensagem: resultado.motivo
+                mensagem: resultadoValidacao.mensagem
             });
         }
+
+        return res.json({
+            sucesso: true,
+            mensagem: resultadoValidacao.mensagem,
+            cpfOriginal: cpf
+        });
     }
-}
-}
+};
+
 module.exports = cpfController;
