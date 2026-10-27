@@ -1,4 +1,3 @@
-
 function validarCPFsimples(cpfOriginal) {
     if(!cpfOriginal) return { valido: false, mensagem: "CPF não informado" };
 
